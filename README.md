@@ -3,7 +3,7 @@ Precomputed shade FOV algo implementation
 
 
 This is a implementation of an elegant FOV algorithm for rogouelike games in Golang.
-Take a look for (orifinal post)[https://www.reddit.com/r/roguelikedev/comments/5n1tx3/fov_algorithm_sharencompare/] for details.
+Take a look for [original post](https://www.reddit.com/r/roguelikedev/comments/5n1tx3/fov_algorithm_sharencompare/) for details.
 
 The problem of this particular algo is walls lighting. My solution is far from ideal, adds much complexity to a
 single-pass (in ideal conditions) algo.
@@ -12,16 +12,16 @@ single-pass (in ideal conditions) algo.
 Basic description
 ---
 
-####Method
+#### Method
 
-#####Beforehand
+##### Beforehand
 
 - List the cells in your largest-possible FOV, storing X and Y values relative to the center.
 - Store the distance from the center for each cell, and sort the list by this in ascending order.
 - Store the range of angles occludedAngles by each cell in this list, in clockwise order as absolute integers only.
 - Create a 360-char string of 0s called EmptyShade, and a 360-char string of 1s called FullShade
 
-#####Runtime
+##### Runtime
 
 - Store two strings – CurrentShade and NextShade
 - Set CurrentShade to EmptyShade to start.
