@@ -123,7 +123,9 @@ func (ps *precomputedShade) PrecomputeFovMap() {
 }
 
 func (ps *precomputedShade) recalc(level *types.Level, initCoords types.Coords, radius int) {
-
+	for i, _ := range ps.CellList {
+		ps.CellList[i].lit = 0
+	}
 	ps.originCoords = initCoords
 
 	if radius > ps.MaxTorchRadius {
