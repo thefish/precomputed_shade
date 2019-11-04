@@ -8,12 +8,15 @@ import (
 )
 
 func TestPrecompShade(t *testing.T) {
+
+	//before everything else we prepare tree
 	ppFov := NewPrecomputedShade(15)
 	_ = ppFov
 
-	t.Log("ok")
 
-	//level := gamemap.NewLevel(util.ClientCtx{}, "test", 1)
+	// now we "load"... err.. construct the dungeon level.
+	//Note that level is totally independent of FOV tree, you can re-use fov tree for every level, even for
+	// every monster, light source etc without recalculating it again.
 
 	level := &types.Level{
 		Name:  "test1",
@@ -51,6 +54,9 @@ func TestPrecompShade(t *testing.T) {
 
 	level.SetTileByXY(11, 10, types.NewWall())
 
+
+	//and now begins the game loop
+
 	ppFov.ComputeFov(level, playerCoords, 12)
 
 	fmt.Printf("\n\n")
@@ -65,6 +71,9 @@ func TestPrecompShade(t *testing.T) {
 		}
 		return result
 	}
+
+	//rendering level again for testing purposes
+
 	result := ""
 	for y := 0; y < level.H; y++ {
 		for x := 0; x < level.W; x++ {
@@ -75,6 +84,9 @@ func TestPrecompShade(t *testing.T) {
 		fmt.Printf("\n")
 		result = result + fmt.Sprintf("\n")
 	}
+
+	// perform test
+	
 	expected := strings.Join([]string{
 		"???######???######??",
 		"???......???......??",
