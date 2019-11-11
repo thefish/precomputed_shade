@@ -10,9 +10,7 @@ single-pass (in ideal conditions) algo.~~
 
 
 After several attempts to compute reflected light (which gave some lighting artefacts) i moved to derease scan resolution of algo 
-from 1 to 1/2 degrees. Now FOV is computed in a single pass over tree, but it gives okay results on torch radius up to 15 cells, 
-further the artifatcs appear again. Let's assume that FOV with 15 cells radius would be enough for a roguelike. Or you can increase 
-the constant SCAN_RESOLUTION further.
+from 1 to 1/2 degrees. Now FOV is computed in a single pass over tree, but it gives okay results on torch radius only up to 15 cells. Afterwards lighting artifatcs appear again. Let's assume that FOV with 15 cells radius would be enough for a roguelike. Or you can just increase the constant SCAN_RESOLUTION further according to you needs.
 
 Note: for classic level rendering you might to introduce another tile property - Explored[bool]. You can set it to true in same code
 blocks as Visible property.
