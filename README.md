@@ -7,6 +7,8 @@ Take a look for [original post](https://www.reddit.com/r/roguelikedev/comments/5
 
 ~~The problem of this particular algo is walls lighting. My solution is far from ideal, adds much complexity to a
 single-pass (in ideal conditions) algo.~~
+
+
 After several attempts to compute reflected light (which gave some lighting artefacts) i moved to derease scan resolution of algo 
 from 1 to 1/2 degrees. Now FOV is computed in a single pass over tree, but it gives okay results on torch radius up to 15 cells, 
 further the artifatcs appear again. Let's assume that FOV with 15 cells radius would be enough for a roguelike. Or you can increase 
