@@ -8,6 +8,8 @@ import (
 	"sort"
 )
 
+const ScanResolution = 720
+
 var errNotFoundCell = errors.New("Cell not found")
 var errOutOfBounds = errors.New("Cell out of bounds")
 
@@ -93,9 +95,9 @@ func (ps *precomputedShade) PrecomputeFovMap() {
 
 	//Bresanham lines / Raycast
 	var lineX, lineY float64
-	for i := 0; i < 360; i++ {
-		dx := math.Sin(float64(i) / (float64(180) / math.Pi))
-		dy := math.Cos(float64(i) / (float64(180) / math.Pi))
+	for i := 0; i < ScanResolution; i++ {
+		dx := math.Sin(float64(i) / (float64(ScanResolution/2) / math.Pi))
+		dy := math.Cos(float64(i) / (float64(ScanResolution/2) / math.Pi))
 
 		lineX = 0
 		lineY = 0
@@ -134,11 +136,11 @@ func (ps *precomputedShade) recalc(level *types.Level, initCoords types.Coords, 
 
 	level.GetTile(initCoords).Visible = true
 
-	var fullShade = make([]byte, 360)
+	var fullShade = make([]byte, ScanResolution)
 	for i := range fullShade {
 		fullShade[i] = 1
 	}
-	var emptyShade = make([]byte, 360)
+	var emptyShade = make([]byte, ScanResolution)
 	currentShade := emptyShade
 	nextShade := emptyShade
 
@@ -163,10 +165,12 @@ func (ps *precomputedShade) recalc(level *types.Level, initCoords types.Coords, 
 			continue
 		}
 
-		//fmt.Printf("\n level coords: %v", lc)
 		for _, angle := range cell.occludedAngles {
 
-			if level.GetTile(lc).BlocksSight {
+			if level.GetTile(lc).BlocksSight && ps.LightWalls {
+				if nextShade[angle] == 0 && currentShade[angle] == 0 {
+					level.GetTile(lc).Visible = true
+				}
 				nextShade[angle] = 1
 			}
 
@@ -190,22 +194,6 @@ func (ps *precomputedShade) ComputeFov(level *types.Level, initCoords types.Coor
 				continue
 			}
 			level.GetTile(cs).Visible = true
-		}
-
-		//light walls, crutch
-		if level.GetTile(cs).BlocksSight && ps.LightWalls {
-			if cell.IsAdjacentTo(&types.Coords{0, 0}) {
-				level.GetTile(cs).Visible = true
-			} else {
-				for _, maybeNb := range ps.CellList {
-					if //int(maybeNb.distance) == int(cell.distance-1) &&
-					maybeNb.IsAdjacentTo(&cell.Coords) &&
-						(maybeNb.X == cell.X || maybeNb.Y == cell.Y) &&
-						maybeNb.lit > 0 { //magic constant!
-						level.GetTile(cs).Visible = true
-					}
-				}
-			}
 		}
 	}
 }
