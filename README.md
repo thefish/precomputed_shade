@@ -48,3 +48,7 @@ Usage
 --
 See test for usage example. The types package is a minimal sample, you can use your own,
 but edit the algo accordingly.
+
+PS
+---
+(Обсуждение на русском)[http://rlgclub.ru/forum/viewtopic.php?f=7&t=5969]
