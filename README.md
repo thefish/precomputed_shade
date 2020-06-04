@@ -51,4 +51,4 @@ but edit the algo accordingly.
 
 PS
 ---
-(Обсуждение на русском)[http://rlgclub.ru/forum/viewtopic.php?f=7&t=5969]
+[Обсуждение на русском](http://rlgclub.ru/forum/viewtopic.php?f=7&t=5969)
